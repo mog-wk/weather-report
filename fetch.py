@@ -8,7 +8,7 @@ def fetch():
 
     url_exts = [
         "sao-paulo", "rio-de-janeiro",
-        #"brasilia", "salvador", "fortaleza", "belo-horizonte", "manaus",
+        "brasilia", "salvador", "fortaleza", "belo-horizonte", "manaus",
         #"curitiba", "recife", "porto-alegre", "goiania", "guarulhos", "campinas", "são-luis", "são-goncalo",
         #"maceio", "duque-de-caxias", "natal", "teresina", "são-bernardo-do-campo", "nova-iguacu", "joao-pessoa",
         #"santo-andre", "osasco", "jaboatao-dos-guararapes", "são-jose-dos-campos", "ribeirao-preto", "uberlandia",
@@ -42,7 +42,7 @@ def fetch():
                 if 'min' in min_t.text:
                     min_t = min_t.text.split('.')[1].split('°')[0]
                 else:
-                    min_t = min_t.text
+                    min_t = min_t.text.split('C')[0][:-1]
 
             if max_t == None:
                 max_t = "_"
@@ -50,7 +50,7 @@ def fetch():
                 if 'max' in max_t.text:
                     max_t = max_t.text.split('.')[1].split('°')[0]
                 else:
-                    max_t = max_t.text
+                    max_t = max_t.text.split('C')[0][:-1]
 
 
             data = html.find("ul",  class_="list-unstyled").text

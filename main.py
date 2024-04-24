@@ -6,32 +6,42 @@ from errors import InvalidParameter
 
 DEFAULT_DATABASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + "/logs/"
 
+loca_save_directory = None
+
 def match_args(args: list):
+    # priority args
     args_it = iter(args)
+    # arguments loop
     for arg in args_it:
         match arg:
             case "-h":
                 print_help();
                 sys.exit(0)
-            case "--raw-save" | "-S":
+            case "--save-raw" | "--raw-save" | "-S":
                 v = parse_key_arg(args_it)
                 if v == None:
-                    parse.add_csv_row(DEFAULT_DATABASE_DIRECTORY)
+                    parse.save_csv(DEFAULT_DATABASE_DIRECTORY)
                 else:
                     if os.path.isabs(v):
-                        parse.add_csv_row(v)
+                        parse.save_csv(v)
                     else:
-                        parse.add_csv_row(os.getcwd() + '/' + v)
-
+                        parse.save_csv(os.getcwd() + '/' + v)
                 continue;
-            case "--save":
-                print("save test...")
+            case "--save" | "-s":
+                v = parse_key_arg(args_it)
+                if v == None:
+                    parse.save_csv(DEFAULT_DATABASE_DIRECTORY, analyze_data=True)
+                else:
+                    if os.path.isabs(v):
+                        parse.save_csv(v, analyze_data=True)
+                    else:
+                        parse.save_csv(os.getcwd() + '/' + v, analyze_data=True)
                 continue;
             case "--analyze":
                 print("alalyze scpt")
                 continue
             case "--save_directory" | "-d":
-                k, v = arg, parse_key_arg(args_it)
+                k, v = arg, parse_key_arg(args_it) ## TODO: Make Priority
                 continue
             case _:
                 print(f"Invalid parameter: {arg}")

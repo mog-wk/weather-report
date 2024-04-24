@@ -1,0 +1,8 @@
+region,date,time,min_temp,max_temp,wind,wind_dir,humidity,precipitation_prob,precipitation,UV_index
+sao-paulo,2024-04-24,12:07:14,20,31, 17,W, 39, 1, 0, 8
+rio-de-janeiro,2024-04-24,12:07:14,23,30, 16,S, 61, 1, 0, 8
+brasilia,2024-04-24,12:07:14,19,29, 13,ESE, 45, 7, 0, 10
+salvador,2024-04-24,12:07:14,25,28, 13,SSE, 80, 19, 6, 9
+fortaleza,2024-04-24,12:07:14,26,31, 28,ESE, 74, 66, 1, 11
+belo-horizonte,2024-04-24,12:07:14,19,30, 11,W, 44, 6, 0, 9
+manaus,2024-04-24,12:07:14,24,28, 6,WNW, 85, 79, 8, 9
