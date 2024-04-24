@@ -25,16 +25,13 @@ def from_csv(path, analyze_data=False):
 
 def analyze(df: pd.DataFrame, keep=False):
     #df.describe()
-    print(df)
     avg_temp = pd.Series((df["min_temp"] + df["max_temp"]) / 2, name="avg_temp")
     df = pd.merge(df, avg_temp, left_index=True, right_index=True)
-    print(df.head())
-    if keep:
-        print(df)
 
+    if keep:
         return df
 
-    exit(1)
+    exit(0)
 
 if __name__ == "__main__":
     test_dir = os.path.dirname(os.path.abspath(__file__)) + "/test_db/"

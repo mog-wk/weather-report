@@ -68,7 +68,7 @@ def fetch():
             print(err)
             continue
 
-        fetch_bulk.append(cur_date + [ext, min_t, max_t, wind, wind_dir, humidity, precipitation_prob, precipitation, UV_index])
+        fetch_bulk.append(cur_date + [ext, int(min_t), int(max_t), wind, wind_dir, humidity, precipitation_prob, precipitation, UV_index])
 
     return fetch_bulk
 

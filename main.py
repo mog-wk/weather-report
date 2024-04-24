@@ -9,9 +9,26 @@ DEFAULT_DATABASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + "/logs
 loca_save_directory = None
 
 def match_args(args: list):
+    analyze_data = False
+
     # priority args
     args_it = iter(args)
+    for arg in args_it:
+        match arg:
+            case "--analyze":
+                print("alalyze scpt")
+                analyze_data = True
+                args.remove(arg)
+                continue
+            case "--save_directory" | "-d":
+                v = parse_key_arg(args_it)
+                # TODO set save directory
+                args.remove(arg)
+                args.remove(v)
+                continue
+
     # arguments loop
+    args_it = iter(args)
     for arg in args_it:
         match arg:
             case "-h":
@@ -30,19 +47,15 @@ def match_args(args: list):
             case "--save" | "-s":
                 v = parse_key_arg(args_it)
                 if v == None:
-                    parse.save_csv(DEFAULT_DATABASE_DIRECTORY, analyze_data=True)
+                    parse.save_csv(DEFAULT_DATABASE_DIRECTORY,
+                                   analyze_data=analyze_data)
                 else:
                     if os.path.isabs(v):
-                        parse.save_csv(v, analyze_data=True)
+                        parse.save_csv(v, analyze_data=analyze_data)
                     else:
-                        parse.save_csv(os.getcwd() + '/' + v, analyze_data=True)
+                        parse.save_csv(os.getcwd() + '/' + v,
+                                       analyze_data=analyze_data)
                 continue;
-            case "--analyze":
-                print("alalyze scpt")
-                continue
-            case "--save_directory" | "-d":
-                k, v = arg, parse_key_arg(args_it) ## TODO: Make Priority
-                continue
             case _:
                 print(f"Invalid parameter: {arg}")
 
