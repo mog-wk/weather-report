@@ -1,8 +1,9 @@
+import os
 import pandas as pd
 import fetch
 
 
-def save_csv():
+def add_csv_row(path):
     bulk = fetch.fetch()
     data = pd.DataFrame(bulk,
                         columns=["date", "time", "region", "min_temp(°C)", "max_temp(°C)",
@@ -11,7 +12,7 @@ def save_csv():
                                  ],
                         ).set_index("region")
 
-    data.to_csv(f"./test_db/{bulk[0][0]}-{bulk[0][1]}.csv")
+    data.to_csv(f"{path}/{bulk[0][0]}-{bulk[0][1]}.csv")
 
 if __name__ == "__main__":
-    save_csv()
+    add_csv_row(os.path.dirname(os.path.abspath(__file__)) + "/test_db/")

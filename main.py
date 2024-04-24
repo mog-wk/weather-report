@@ -1,7 +1,10 @@
-import sys
+import sys, os
 from pathlib import Path
 
-from errors import InvalidParameter
+import parse
+from errors import InvalidParameter 
+
+DEFAULT_DATABASE_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + "/logs/"
 
 def match_args(args: list):
     args_it = iter(args)
@@ -12,6 +15,13 @@ def match_args(args: list):
                 sys.exit(0)
             case "--raw-save" | "-S":
                 v = parse_key_arg(args_it)
+                if v == None:
+                    parse.add_csv_row(DEFAULT_DATABASE_DIRECTORY)
+                else:
+                    if os.path.isabs(v):
+                        parse.add_csv_row(v)
+                    else:
+                        parse.add_csv_row(os.getcwd() + '/' + v)
 
                 continue;
             case "--save":
@@ -22,7 +32,6 @@ def match_args(args: list):
                 continue
             case "--save_directory" | "-d":
                 k, v = arg, parse_key_arg(args_it)
-                print(k, v)
                 continue
             case _:
                 print(f"Invalid parameter: {arg}")
@@ -33,8 +42,10 @@ def parse_key_arg(arg):
         if parameter.startswith("-"):
             raise KeyError
         return parameter
-    except StopIteration or KeyError:
+    except KeyError:
         InvalidParameter.consume()
+    except StopIteration:
+        return None
 
 def print_help():
     print(
